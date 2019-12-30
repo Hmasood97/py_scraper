@@ -8,15 +8,8 @@ headers = {"User=Agent" : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:71.0
 
 page = requests.get(URL, headers=headers)
 
-soup1 = BeautifulSoup(page.content, 'html.parser')
-#soup2 = BeautifulSoup(soup1.prettify(), "html.parser")
+soup = BeautifulSoup(page.content, 'html.parser')
 
-title = soup1.find(id="productTitle").get_text()
 
-price = soup1.find(id="priceblock_ourprice").get_text()
-
-intPrice = float(price[0:5])
-
-print(intPrice)
-print(title.strip())
+print(soup.prettify())
 
