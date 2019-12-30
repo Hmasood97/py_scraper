@@ -1,5 +1,7 @@
 import requests
+import re
 from bs4 import BeautifulSoup
+import smtplib
 #Amazon link for Nintendo Switch Pro Controller
 URL = 'https://www.amazon.com/Nintendo-Switch-Pro-Controller/dp/B01NAWKYZ0/ref=sr_1_3?keywords=nintendo%2Bpro%2Bcontroller&qid=1577552832&sr=8-3&th=1'
 
@@ -15,8 +17,37 @@ title = soup1.find(id="productTitle").get_text()
 
 price = soup1.find(id="priceblock_ourprice").get_text()
 
-intPrice = price[0:5]
+price2 = re.sub(r"[\n\t\s]*", "", price)
+finalPrice = float(price2[1:3])
 
-print(intPrice)
-print(title.strip())
 
+#price up to two digits
+print(finalPrice)
+
+
+if(finalPrice <56):
+    send_mail()
+
+
+def send_mail():
+    server = smtplib.SMTP('smtp.gmail.com',587)
+    server.ehlo()
+    server.starttls()
+    server.ehlo()
+
+    server.login('pythonmasood97@gmail.com''YOURPASSWORD')
+
+    subject = "SWITCH PRO CONTROLLER PRICE DOWN"
+
+    body = "check link https://www.amazon.com/Nintendo-Switch-Pro-Controller/dp/B01NAWKYZ0/ref=sr_1_3?keywords=switch%2Bpro%2Bcontroller&qid=1577724144&sr=8-3&th=1"
+
+    msg = f"Subject: {subject}\n\n{body}"
+
+    server.sendmail(
+        'pythonmasood97@gmail.com', 
+        'hisham9977@gmail.com',
+        msg)
+
+    print("sent email")
+
+    server.quit()
