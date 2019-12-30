@@ -15,7 +15,7 @@ title = soup1.find(id="productTitle").get_text()
 
 price = soup1.find(id="priceblock_ourprice").get_text()
 
-intPrice = float(price[0:5])
+intPrice = price[0:5]
 
 print(intPrice)
 print(title.strip())
